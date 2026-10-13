@@ -1,1 +1,63 @@
 
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FS VIDEO EDITI</title>
+<style>
+body{background:#100d18;color:white;font-family:Arial;text-align:center;padding:20px}
+h1{color:#bb86fc}
+.card{background:#211a2e;padding:20px;border-radius:18px;margin:20px auto;max-width:450px}
+button,label{display:inline-block;background:#873cff;color:white;padding:13px;border:0;border-radius:10px;margin:6px;font-size:16px}
+img{max-width:100%;margin-top:15px;border-radius:12px}
+input{max-width:100%}
+</style>
+</head>
+<body>
+<h1>💜 FS VIDEO EDITI</h1>
+<p>PRO STUDIO PHOTO EDITOR</p>
+<div class="card">
+<h3>Chagua picha</h3>
+<input type="file" id="file" accept="image/*">
+<img id="photo" hidden>
+</div>
+<div class="card">
+<h3>Hariri picha</h3>
+<p>Mwangaza</p>
+<input id="bright" type="range" min="50" max="200" value="100">
+<p>Contrast</p>
+<input id="contrast" type="range" min="50" max="200" value="100">
+<p>Filters</p>
+<button onclick="f='none';update()">Original</button>
+<button onclick="f='grayscale(1)';update()">Black & White</button>
+<button onclick="f='sepia(1)';update()">Vintage</button>
+<button onclick="f='saturate(2)';update()">Color</button>
+<br>
+<button onclick="save()">Hifadhi HD</button>
+</div>
+<script>
+let f='none';
+const p=document.getElementById('photo');
+document.getElementById('file').onchange=e=>{
+if(e.target.files[0]){
+p.src=URL.createObjectURL(e.target.files[0]);
+p.hidden=false;update();
+}};
+function update(){
+p.style.filter=`brightness(${bright.value}%) contrast(${contrast.value}%) ${f}`;
+}
+bright.oninput=update;
+contrast.oninput=update;
+function save(){
+if(p.hidden||!p.naturalWidth){alert('Chagua picha kwanza');return}
+let c=document.createElement('canvas'),x=c.getContext('2d');
+c.width=p.naturalWidth;c.height=p.naturalHeight;
+x.filter=p.style.filter;x.drawImage(p,0,0);
+let a=document.createElement('a');
+a.download='FS-VIDEO-EDITI.png';a.href=c.toDataURL('image/png');a.click();
+}
+</script>
+</body>
+</html>
+
